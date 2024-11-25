@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Fondo de la página y organización del contenido */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    color: #2d3436;
+    padding: 20px;
+}
+
+/* Navegación principal */
+nav {
+    background-color: #0984e3;
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #dfe6e9;
+}
+
+/* Título y subtítulo */
+h1 {
+    font-size: 2em;
+    color: #0984e3;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1em;
+    color: #636e72;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de cursos */
+#courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Estilo de cada curso */
+#courses div {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+#courses div:hover {
+    transform: translateY(-5px);
+}
+
+/* Información de los cursos */
+#courses p {
+    margin: 8px 0;
+    color: #2d3436;
+}
+
+/* ID y código del curso */
+#courses p:first-child {
+    font-weight: bold;
+    color: #636e72;
+}
+
+/* Enlace de error */
+#courses p[style="color: red;"] {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* Diseño responsivo */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.5em;
+    }
+}

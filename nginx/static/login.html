@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/login.css">
+    <title>Login</title>
+    <style>
+     
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+       
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+      
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #dfe6e9;
+        }
+
+        form {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        legend {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        input:focus {
+            outline: 2px solid #74b9ff;
+            background-color: #dfe6e9;
+        }
+
+        button {
+            background-color: #0984e3;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #74b9ff;
+        }
+
+        #error {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        
+        @media (max-width: 400px) {
+            form {
+                width: 90%;
+            }
+
+            nav {
+                left: 10px;
+            }
+
+            nav a {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>·
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+    </nav>
+    <div>
+        <p id="error" style="color: red;"></p>
+    </div>
+    <form id="loginForm">
+        <legend>Iniciar Sesión</legend>
+        <input type="text" id="username" />
+        <input type="password" id="password" />
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+    <script>
+        const loginEl = document.getElementById('loginForm');
+        const errorEl = document.getElementById('error');
+
+        errorEl.addEventListener('click', () => {
+            errorEl.innerText = '';
+        });
+
+        loginEl.addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('error').innerText = '';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            console.log('Username:', username);
+            console.log('Password:', password);
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Login successful');
+                    window.location = '/profile';
+                } else {
+                    console.log('Login failed');
+                    document.getElementById('error').innerText = 'Login failed';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('error').innerText = 'Error: ' + error;
+            });
+        });
+    </script>
+</body>
+</html>

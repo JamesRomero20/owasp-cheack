@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/user.css">
+    <title>User</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Fondo de la página y diseño centralizado */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    color: #2d3436;
+}
+
+/* Contenedor de usuario */
+#user {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Imagen de perfil */
+#user img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #0984e3;
+    margin-bottom: 15px;
+}
+
+/* Nombre y subtítulos */
+#user h3 {
+    font-size: 1.5em;
+    color: #0984e3;
+    margin-bottom: 5px;
+}
+
+#user p {
+    font-size: 1em;
+    margin: 5px 0;
+    color: #636e72;
+}
+
+/* Enlace de red social */
+#user a {
+    color: #0984e3;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+#user a:hover {
+    color: #74b9ff;
+}
+
+/* Mensaje de error */
+#user p[style="color: red;"] {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-top: 20px;
+}
+
+/* Diseño responsivo */
+@media (max-width: 500px) {
+    #user {
+        width: 90%;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="user"></div>
+    <script>
+        const user = document.getElementById('user');
+
+        // read userId from url
+        const url = new URL(window.location.href);
+        const userId = url.searchParams.get('userId');
+
+        // get user data from the server
+        fetch(`/api/users/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                user.innerHTML = `
+                    <img style="width: 120px;height: 120px; border-radius: 50%; object-fit: cover;" src="/files/${data.username}.jpg" alt="Profile picture" />
+                    <h3>${data.first_name} ${data.last_name}</h3>
+                    <p>About me</p>
+                    <p>${data.bio}</p>
+                    <p>Email: ${data.email}</p>
+                    <p>Phone: ${data.phone}</p>
+                    <p>Follow me <a href="${data.website}" target="_blank" noreferer noopener>${data.website}</a></p>
+                `;
+            })
+            .catch(error => {
+                // unknown user
+                user.innerHTML = `<p style="color: red;">User not found</p>`;
+            });
+    </script>
+</body>
+</html>
